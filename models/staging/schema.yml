@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+  - name: raw_pos
+    database: SNOWFLAKE_LEARNING_DB  # Your Snowflake database name
+    schema: DBT_STAGING  # Your Snowflake schema name
+    tables:
+      - name: menu
+        description: Raw menu data from point of sale system
+
+      - name: order_detail
+        description: Raw orders data from point of sale system
+
+      - name: truck  
+        description: Raw truck data from point of sale system
+
+models:
+  - name: stg_menu
+    description: "Staging model for menu data"
+    columns:
+      - name: menu_id
+        description: "The unique identifier for each menu item"
+        data_tests:
+          - unique
+          - not_null
+  
+  - name: stg_order_detail
+    description: "Staging model for orders data"
+    columns:
+      - name: order_id
+        description: "The unique identifier for each order"
+        data_tests:
+          - unique
+          - not_null
+      - name: order_detail_id
+        description: "The unique identifier for the customer placing the order"
+        data_tests:
+          - not_null
+
+  - name: stg_truck
+    description: "Staging model for trucks data"
+    columns:
+      - name: truck_id
+        description: "The unique identifier for each truck"
+        data_tests:
+          - unique
+          - not_null
